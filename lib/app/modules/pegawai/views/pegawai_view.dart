@@ -39,7 +39,7 @@ class PegawaiView extends GetView<PegawaiController> {
             _buildActionButton(
               icon: Icons.edit_note,
               text: 'Update Pegawai',
-              color: Colors.teal,
+              color: Colors.red,
               onTap: () {
                 Get.back();
                 Get.to(
@@ -52,7 +52,7 @@ class PegawaiView extends GetView<PegawaiController> {
             _buildActionButton(
               icon: Icons.delete_sweep,
               text: 'Hapus Pegawai',
-              color: Colors.red,
+              color: Colors.redAccent,
               onTap: () {
                 Get.back();
                 _showDeleteConfirmation(id);
@@ -74,13 +74,13 @@ class PegawaiView extends GetView<PegawaiController> {
         title: Text(
           'Konfirmasi Hapus',
           style: TextStyle(
-            color: Colors.teal[900],
+            color: Colors.red[900],
             fontWeight: FontWeight.bold,
           ),
         ),
         content: Text(
           'Apakah Anda yakin ingin menghapus data pegawai ini?',
-          style: TextStyle(color: Colors.teal[700]),
+          style: TextStyle(color: Colors.red[700]),
         ),
         actions: [
           TextButton(
@@ -148,7 +148,7 @@ class PegawaiView extends GetView<PegawaiController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.teal[50],
+      backgroundColor: Colors.white,
       appBar: AppBar(
         title: Text(
           'Daftar Pegawai',
@@ -158,7 +158,7 @@ class PegawaiView extends GetView<PegawaiController> {
             letterSpacing: 1.2,
           ),
         ),
-        backgroundColor: Colors.teal[700],
+        backgroundColor: Colors.red[700],
         elevation: 0,
         centerTitle: true,
         shape: RoundedRectangleBorder(
@@ -177,8 +177,7 @@ class PegawaiView extends GetView<PegawaiController> {
                     padding: EdgeInsets.symmetric(vertical: 16),
                     itemCount: listAllDocs.length,
                     itemBuilder: (context, index) {
-                      var data =
-                          listAllDocs[index].data() as Map<String, dynamic>;
+                      var data = listAllDocs[index].data() as Map<String, dynamic>;
                       return Padding(
                         padding: EdgeInsets.symmetric(
                           horizontal: 16,
@@ -190,12 +189,16 @@ class PegawaiView extends GetView<PegawaiController> {
                             borderRadius: BorderRadius.circular(20),
                             boxShadow: [
                               BoxShadow(
-                                color: Colors.teal.shade100.withOpacity(0.5),
+                                color: Colors.red.shade100.withOpacity(0.5),
                                 spreadRadius: 1,
                                 blurRadius: 8,
                                 offset: Offset(0, 4),
                               ),
                             ],
+                            border: Border.all(
+                              color: Colors.red.shade100,
+                              width: 1,
+                            ),
                           ),
                           child: ListTile(
                             contentPadding: EdgeInsets.symmetric(
@@ -208,8 +211,8 @@ class PegawaiView extends GetView<PegawaiController> {
                               decoration: BoxDecoration(
                                 gradient: LinearGradient(
                                   colors: [
-                                    Colors.teal[300]!,
-                                    Colors.teal[600]!,
+                                    Colors.red[300]!,
+                                    Colors.red[600]!,
                                   ],
                                   begin: Alignment.topLeft,
                                   end: Alignment.bottomRight,
@@ -217,8 +220,7 @@ class PegawaiView extends GetView<PegawaiController> {
                                 borderRadius: BorderRadius.circular(15),
                                 boxShadow: [
                                   BoxShadow(
-                                    color:
-                                        Colors.teal.shade200.withOpacity(0.4),
+                                    color: Colors.red.shade200.withOpacity(0.4),
                                     spreadRadius: 1,
                                     blurRadius: 5,
                                     offset: Offset(0, 3),
@@ -239,7 +241,7 @@ class PegawaiView extends GetView<PegawaiController> {
                             title: Text(
                               "${data["nama"]}",
                               style: TextStyle(
-                                color: Colors.teal[900],
+                                color: Colors.red[900],
                                 fontWeight: FontWeight.w700,
                                 fontSize: 17,
                               ),
@@ -247,17 +249,16 @@ class PegawaiView extends GetView<PegawaiController> {
                             subtitle: Text(
                               "NIP: ${data["nip"]}",
                               style: TextStyle(
-                                color: Colors.teal[700],
+                                color: Colors.red[700],
                                 fontSize: 14,
                                 fontStyle: FontStyle.italic,
                               ),
                             ),
                             trailing: IconButton(
-                              onPressed: () =>
-                                  showEnhancedOption(listAllDocs[index].id),
+                              onPressed: () => showEnhancedOption(listAllDocs[index].id),
                               icon: Icon(
                                 Icons.more_horiz,
-                                color: Colors.teal[700],
+                                color: Colors.red[700],
                                 size: 28,
                               ),
                             ),
@@ -273,13 +274,13 @@ class PegawaiView extends GetView<PegawaiController> {
                         Icon(
                           Icons.diversity_3_outlined,
                           size: 120,
-                          color: Colors.teal[300],
+                          color: Colors.red[300],
                         ),
                         SizedBox(height: 20),
                         Text(
                           "Tidak Ada Data Pegawai",
                           style: TextStyle(
-                            color: Colors.teal[900],
+                            color: Colors.red[900],
                             fontSize: 24,
                             fontWeight: FontWeight.bold,
                             letterSpacing: 1.1,
@@ -289,7 +290,7 @@ class PegawaiView extends GetView<PegawaiController> {
                         Text(
                           "Silakan tambahkan data pegawai baru",
                           style: TextStyle(
-                            color: Colors.teal[700],
+                            color: Colors.red[700],
                             fontSize: 16,
                           ),
                         ),
@@ -299,7 +300,7 @@ class PegawaiView extends GetView<PegawaiController> {
           }
           return Center(
             child: CircularProgressIndicator(
-              valueColor: AlwaysStoppedAnimation<Color>(Colors.teal.shade700),
+              valueColor: AlwaysStoppedAnimation<Color>(Colors.red.shade700),
             ),
           );
         },
