@@ -1,0 +1,105 @@
+{
+  "project_info": {
+    "project_number": "775899042358",
+    "project_id": "latihan-22312019",
+    "storage_bucket": "latihan-22312019.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:775899042358:android:8c57316b3e020be137be97",
+        "android_client_info": {
+          "package_name": "com.example.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "775899042358-5dg8705kedeqjk7bapv2fr49ohss74gk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAdZRxepdfh0Y2M2b73-6IP2dfnl3FSy0k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "775899042358-5dg8705kedeqjk7bapv2fr49ohss74gk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:775899042358:android:476f51a86fdc02af37be97",
+        "android_client_info": {
+          "package_name": "com.example.myapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "775899042358-5dg8705kedeqjk7bapv2fr49ohss74gk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAdZRxepdfh0Y2M2b73-6IP2dfnl3FSy0k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "775899042358-5dg8705kedeqjk7bapv2fr49ohss74gk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:775899042358:android:2295c516d5fa2f4d37be97",
+        "android_client_info": {
+          "package_name": "com.raziz"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "775899042358-9r78jcrlji0onaklkvpc92gmv32qor2a.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.raziz",
+            "certificate_hash": "d99f5b8774d004eeeb9b52624465e46eb43a3ff6"
+          }
+        },
+        {
+          "client_id": "775899042358-5dg8705kedeqjk7bapv2fr49ohss74gk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAdZRxepdfh0Y2M2b73-6IP2dfnl3FSy0k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "775899042358-5dg8705kedeqjk7bapv2fr49ohss74gk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
