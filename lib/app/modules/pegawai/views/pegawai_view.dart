@@ -5,110 +5,142 @@ import 'package:myapp/app/modules/pegawai/views/pegawai_update_view.dart';
 import '../controllers/pegawai_controller.dart';
 
 class PegawaiView extends GetView<PegawaiController> {
-  void showOption(id) async {
-    await Get.dialog(
-      Dialog(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20),
+  void showEnhancedOption(id) {
+    showModalBottomSheet(
+      context: Get.context!,
+      backgroundColor: Colors.transparent,
+      builder: (context) => Container(
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(30),
+            topRight: Radius.circular(30),
+          ),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black26,
+              blurRadius: 10,
+              spreadRadius: 2,
+            )
+          ],
         ),
-        child: Container(
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              colors: [
-                Colors.teal.shade50,
-                Colors.teal.shade100,
-              ],
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Container(
+              width: 50,
+              height: 5,
+              margin: EdgeInsets.symmetric(vertical: 15),
+              decoration: BoxDecoration(
+                color: Colors.grey[300],
+                borderRadius: BorderRadius.circular(10),
+              ),
             ),
-            borderRadius: BorderRadius.circular(20),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.teal.shade200.withOpacity(0.5),
-                spreadRadius: 2,
-                blurRadius: 10,
-                offset: Offset(0, 4),
-              ),
-            ],
-          ),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: Text(
-                  'Pilih Aksi',
-                  style: TextStyle(
-                    fontSize: 22,
-                    fontWeight: FontWeight.w700,
-                    color: Colors.teal[900],
-                    letterSpacing: 1.2,
-                  ),
-                ),
-              ),
-              Divider(color: Colors.teal[300], thickness: 1.5),
-              _buildOptionTile(
-                icon: Icons.edit,
-                title: 'Update',
-                color: Colors.teal,
-                onTap: () {
-                  Get.back();
-                  Get.to(
-                    PegawaiUpdateView(),
-                    arguments: id,
-                  );
-                },
-              ),
-              _buildOptionTile(
-                icon: Icons.delete,
-                title: 'Delete',
-                color: Colors.red,
-                onTap: () {
-                  Get.back();
-                  controller.delete(id);
-                },
-              ),
-              _buildOptionTile(
-                icon: Icons.close,
-                title: 'Close',
-                color: Colors.grey,
-                onTap: () => Get.back(),
-              ),
-            ],
-          ),
+            _buildActionButton(
+              icon: Icons.edit_note,
+              text: 'Update Pegawai',
+              color: Colors.teal,
+              onTap: () {
+                Get.back();
+                Get.to(
+                  PegawaiUpdateView(),
+                  arguments: id,
+                  transition: Transition.rightToLeft,
+                );
+              },
+            ),
+            _buildActionButton(
+              icon: Icons.delete_sweep,
+              text: 'Hapus Pegawai',
+              color: Colors.red,
+              onTap: () {
+                Get.back();
+                _showDeleteConfirmation(id);
+              },
+            ),
+            SizedBox(height: 20),
+          ],
         ),
       ),
-      barrierDismissible: false,
     );
   }
 
-  Widget _buildOptionTile({
+  void _showDeleteConfirmation(id) {
+    Get.dialog(
+      AlertDialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20),
+        ),
+        title: Text(
+          'Konfirmasi Hapus',
+          style: TextStyle(
+            color: Colors.teal[900],
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        content: Text(
+          'Apakah Anda yakin ingin menghapus data pegawai ini?',
+          style: TextStyle(color: Colors.teal[700]),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Get.back(),
+            child: Text(
+              'Batal',
+              style: TextStyle(color: Colors.grey),
+            ),
+          ),
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.red,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(15),
+              ),
+            ),
+            onPressed: () {
+              Get.back();
+              controller.delete(id);
+            },
+            child: Text('Hapus'),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildActionButton({
     required IconData icon,
-    required String title,
+    required String text,
     required Color color,
     required VoidCallback onTap,
   }) {
-    return ListTile(
-      onTap: onTap,
-      leading: Container(
-        decoration: BoxDecoration(
-          color: color.withOpacity(0.2),
-          borderRadius: BorderRadius.circular(10),
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+      child: ElevatedButton(
+        onPressed: onTap,
+        style: ElevatedButton.styleFrom(
+          backgroundColor: color.withOpacity(0.1),
+          foregroundColor: color,
+          elevation: 0,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(15),
+          ),
+          padding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
         ),
-        padding: EdgeInsets.all(8),
-        child: Icon(icon, color: color),
-      ),
-      title: Text(
-        title,
-        style: TextStyle(
-          color: color,
-          fontWeight: FontWeight.w600,
-          fontSize: 16,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(icon, size: 24),
+            SizedBox(width: 10),
+            Text(
+              text,
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+          ],
         ),
-      ),
-      trailing: Icon(
-        Icons.chevron_right,
-        color: color.withOpacity(0.7),
       ),
     );
   }
@@ -116,19 +148,24 @@ class PegawaiView extends GetView<PegawaiController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Colors.teal[50],
       appBar: AppBar(
         title: Text(
-          'Pegawai List',
+          'Daftar Pegawai',
           style: TextStyle(
-            color: Colors.teal[900],
-            fontWeight: FontWeight.w700,
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
             letterSpacing: 1.2,
           ),
         ),
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.teal[700],
         elevation: 0,
         centerTitle: true,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(
+            bottom: Radius.circular(20),
+          ),
+        ),
       ),
       body: StreamBuilder<QuerySnapshot<Object?>>(
         stream: Get.put(PegawaiController()).streamData(),
@@ -136,113 +173,121 @@ class PegawaiView extends GetView<PegawaiController> {
           if (snapshot.connectionState == ConnectionState.active) {
             var listAllDocs = snapshot.data?.docs ?? [];
             return listAllDocs.isNotEmpty
-                ? Container(
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        colors: [
-                          Colors.teal.shade50,
-                          Colors.teal.shade100,
-                        ],
-                        begin: Alignment.topCenter,
-                        end: Alignment.bottomCenter,
-                      ),
-                    ),
-                    child: ListView.builder(
-                      padding: EdgeInsets.symmetric(vertical: 16),
-                      itemCount: listAllDocs.length,
-                      itemBuilder: (context, index) {
-                        var data = listAllDocs[index].data() as Map<String, dynamic>;
-                        return Padding(
-                          padding: EdgeInsets.symmetric(
-                            horizontal: 16,
-                            vertical: 8,
-                          ),
-                          child: Container(
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(15),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.teal.shade100.withOpacity(0.5),
-                                  spreadRadius: 1,
-                                  blurRadius: 6,
-                                  offset: Offset(0, 3),
-                                ),
-                              ],
-                            ),
-                            child: ListTile(
-                              contentPadding: EdgeInsets.symmetric(
-                                horizontal: 16,
-                                vertical: 8,
+                ? ListView.builder(
+                    padding: EdgeInsets.symmetric(vertical: 16),
+                    itemCount: listAllDocs.length,
+                    itemBuilder: (context, index) {
+                      var data =
+                          listAllDocs[index].data() as Map<String, dynamic>;
+                      return Padding(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 16,
+                          vertical: 8,
+                        ),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(20),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.teal.shade100.withOpacity(0.5),
+                                spreadRadius: 1,
+                                blurRadius: 8,
+                                offset: Offset(0, 4),
                               ),
-                              leading: Container(
-                                decoration: BoxDecoration(
-                                  color: Colors.teal[100],
-                                  borderRadius: BorderRadius.circular(10),
+                            ],
+                          ),
+                          child: ListTile(
+                            contentPadding: EdgeInsets.symmetric(
+                              horizontal: 16,
+                              vertical: 12,
+                            ),
+                            leading: Container(
+                              width: 60,
+                              height: 60,
+                              decoration: BoxDecoration(
+                                gradient: LinearGradient(
+                                  colors: [
+                                    Colors.teal[300]!,
+                                    Colors.teal[600]!,
+                                  ],
+                                  begin: Alignment.topLeft,
+                                  end: Alignment.bottomRight,
                                 ),
-                                width: 50,
-                                height: 50,
-                                child: Center(
-                                  child: Text(
-                                    '${index + 1}',
-                                    style: TextStyle(
-                                      color: Colors.teal[900],
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 18,
-                                    ),
+                                borderRadius: BorderRadius.circular(15),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color:
+                                        Colors.teal.shade200.withOpacity(0.4),
+                                    spreadRadius: 1,
+                                    blurRadius: 5,
+                                    offset: Offset(0, 3),
+                                  ),
+                                ],
+                              ),
+                              child: Center(
+                                child: Text(
+                                  '${index + 1}',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 20,
                                   ),
                                 ),
                               ),
-                              title: Text(
-                                "${data["nama"]}",
-                                style: TextStyle(
-                                  color: Colors.teal[900],
-                                  fontWeight: FontWeight.w600,
-                                  fontSize: 16,
-                                ),
+                            ),
+                            title: Text(
+                              "${data["nama"]}",
+                              style: TextStyle(
+                                color: Colors.teal[900],
+                                fontWeight: FontWeight.w700,
+                                fontSize: 17,
                               ),
-                              subtitle: Text(
-                                "${data["nip"]}",
-                                style: TextStyle(
-                                  color: Colors.teal[700],
-                                  fontSize: 14,
-                                ),
+                            ),
+                            subtitle: Text(
+                              "NIP: ${data["nip"]}",
+                              style: TextStyle(
+                                color: Colors.teal[700],
+                                fontSize: 14,
+                                fontStyle: FontStyle.italic,
                               ),
-                              trailing: IconButton(
-                                onPressed: () => showOption(listAllDocs[index].id),
-                                icon: Icon(
-                                  Icons.more_vert,
-                                  color: Colors.teal[700],
-                                ),
+                            ),
+                            trailing: IconButton(
+                              onPressed: () =>
+                                  showEnhancedOption(listAllDocs[index].id),
+                              icon: Icon(
+                                Icons.more_horiz,
+                                color: Colors.teal[700],
+                                size: 28,
                               ),
                             ),
                           ),
-                        );
-                      },
-                    ),
+                        ),
+                      );
+                    },
                   )
                 : Center(
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Icon(
-                          Icons.list_alt,
-                          size: 100,
+                          Icons.diversity_3_outlined,
+                          size: 120,
                           color: Colors.teal[300],
                         ),
                         SizedBox(height: 20),
                         Text(
-                          "Data Kosong",
+                          "Tidak Ada Data Pegawai",
                           style: TextStyle(
                             color: Colors.teal[900],
-                            fontSize: 22,
-                            fontWeight: FontWeight.w600,
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold,
                             letterSpacing: 1.1,
                           ),
                         ),
                         SizedBox(height: 10),
                         Text(
-                          "Tidak ada data pegawai yang tersedia",
+                          "Silakan tambahkan data pegawai baru",
                           style: TextStyle(
                             color: Colors.teal[700],
                             fontSize: 16,

@@ -90,7 +90,7 @@ class _DashboardAdminState extends State<DashboardAdmin> {
                   color: Colors.white,
                 ),
                 Text(
-                  "Restu Wijaya",
+                  "Raziz Ahmad Arohmani",
                   style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
