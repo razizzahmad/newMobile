@@ -57,16 +57,18 @@ class _DashboardAdminState extends State<DashboardAdmin> {
     return Scaffold(
       drawer: drawer(),
       appBar: AppBar(
-        backgroundColor: Colors.teal,
+        backgroundColor: Colors.lightBlue,
         titleSpacing: 0,
-        title: Text(_fragment[_index]['title']),
+        title: Text(
+          _fragment[_index]['title'],
+          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+        ),
         actions: [
           IconButton(
             onPressed: () => Get.to(_fragment[_index]['add']),
-            icon: Icon(Icons.add_circle_outline),
+            icon: Icon(Icons.add_circle_outline, color: Colors.white),
           )
         ],
-
       ),
       body: _fragment[_index]['view'],
     );
@@ -78,93 +80,109 @@ class _DashboardAdminState extends State<DashboardAdmin> {
         children: [
           DrawerHeader(
             decoration: BoxDecoration(
-              color: Colors.teal,
+              color: Colors.lightBlue,
             ),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.end,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Icon(
-                  Icons.account_circle,
-                  size: 80,
-                  color: Colors.white,
+                Container(
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    border: Border.all(color: Colors.white, width: 2),
+                  ),
+                  child: CircleAvatar(
+                    radius: 40,
+                    backgroundColor: Colors.white,
+                    child: Icon(
+                      Icons.person,
+                      size: 50,
+                      color: Colors.lightBlue,
+                    ),
+                  ),
                 ),
+                SizedBox(height: 10),
                 Text(
                   "Raziz Ahmad Arohmani",
                   style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white),
-                ),
-                SizedBox(
-                  height: 2,
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
                 ),
                 Text(
                   'Admin',
                   style: TextStyle(
                     fontSize: 12,
-                    color: Colors.white,
+                    color: Colors.white70,
                   ),
                 ),
               ],
             ),
           ),
-          ListTile(
-            onTap: () {
-              setState(() => _index = 0);
-              Get.back();
-            },
-            leading: Icon(Icons.dashboard),
-            title: Text('Dashboard'),
-            trailing: Icon(Icons.navigate_next),
-            iconColor: Colors.teal,
-            textColor: Colors.teal,
+          _buildDrawerItem(
+            index: 0,
+            icon: Icons.dashboard,
+            title: 'Dashboard',
+            color: Colors.lightBlue,
           ),
-          ListTile(
-            onTap: () {
-              setState(() => _index = 1);
-              Get.back();
-            },
-            leading: Icon(Icons.people),
-            title: Text('Data Mahasiswa'),
-            trailing: Icon(Icons.navigate_next),
-            iconColor: Colors.teal,
-            textColor: Colors.teal,
+          _buildDrawerItem(
+            index: 1,
+            icon: Icons.people,
+            title: 'Data Mahasiswa',
+            color: Colors.green,
           ),
-          ListTile(
-            onTap: () {
-              setState(() => _index = 2);
-              Get.back();
-            },
-            leading: Icon(Icons.people),
-            title: Text('Data Dosen'),
-            trailing: Icon(Icons.navigate_next),
-            iconColor: Colors.teal,
-            textColor: Colors.teal,
+          _buildDrawerItem(
+            index: 2,
+            icon: Icons.person_pin,
+            title: 'Data Dosen',
+            color: Colors.purple,
           ),
-          ListTile(
-            onTap: () {
-              setState(() => _index = 3);
-              Get.back();
-            },
-            leading: Icon(Icons.people),
-            title: Text('Data Pegawai'),
-            trailing: Icon(Icons.navigate_next),
-            iconColor: Colors.teal,
-            textColor: Colors.teal,
+          _buildDrawerItem(
+            index: 3,
+            icon: Icons.work,
+            title: 'Data Pegawai',
+            color: Colors.orange,
           ),
-          ListTile(
+          _buildDrawerItem(
+            index: -1,
+            icon: Icons.logout,
+            title: 'Logout',
+            color: Colors.red,
             onTap: () {
               Get.back();
               cAuth.logout();
             },
-            leading: Icon(Icons.logout),
-            title: Text('Logout'),
-            trailing: Icon(Icons.navigate_next),
-            iconColor: Colors.teal,
-            textColor: Colors.teal,
           ),
         ],
+      ),
+    );
+  }
+
+  Widget _buildDrawerItem({
+    required int index,
+    required IconData icon,
+    required String title,
+    required Color color,
+    VoidCallback? onTap,
+  }) {
+    return ListTile(
+      onTap: onTap ??
+          () {
+            setState(() => _index = index);
+            Get.back();
+          },
+      leading: Icon(
+        icon,
+        color: color,
+      ),
+      title: Text(
+        title,
+        style: TextStyle(color: color),
+      ),
+      trailing: Icon(
+        Icons.navigate_next,
+        color: color,
       ),
     );
   }

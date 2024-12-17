@@ -13,7 +13,7 @@ class PegawaiUpdateView extends GetView<PegawaiController> {
       appBar: AppBar(
         backgroundColor: Colors.teal[500],
         title: Text(
-          'Ubah Pegawai', 
+          'Ubah Pegawai',
           style: TextStyle(
             color: Colors.white,
             fontWeight: FontWeight.bold,
@@ -32,7 +32,7 @@ class PegawaiUpdateView extends GetView<PegawaiController> {
             controller.cJabatan.text = data['jabatan'];
             controller.cAlamat.text = data['alamat'];
             controller.cJeniskelamin.text = data['jeniskelamin'];
-            
+
             return Container(
               padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
               child: SingleChildScrollView(
