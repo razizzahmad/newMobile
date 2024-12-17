@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
-
 import 'package:get/get.dart';
 import 'package:myapp/app/controllers/auth_controller.dart';
 import 'package:myapp/app/modules/dosen/views/dosen_add_view.dart';
 import 'package:myapp/app/modules/dosen/views/dosen_view.dart';
+import 'package:myapp/app/modules/karyawan_22312019/views/karyawan_add_view.dart';
+import 'package:myapp/app/modules/karyawan_22312019/views/karyawan_view.dart';
 import 'package:myapp/app/modules/mahasiswa/views/mahasiswa_add_view.dart';
 import 'package:myapp/app/modules/mahasiswa/views/mahasiswa_view.dart';
-import 'package:myapp/app/modules/pegawai/views/pegawai_add_view.dart';
-import 'package:myapp/app/modules/pegawai/views/pegawai_view.dart';
-
 import '../controllers/home_controller.dart';
 
 class HomeView extends GetView<HomeController> {
@@ -29,161 +27,162 @@ class DashboardAdmin extends StatefulWidget {
 class _DashboardAdminState extends State<DashboardAdmin> {
   final cAuth = Get.find<AuthController>();
   int _index = 0;
+
   List<Map> _fragment = [
     {
       'title': 'Dashboard',
+      'icon': Icons.dashboard_customize_outlined,
       'view': MahasiswaView(),
       'add': () => MahasiswaAddView(),
+      'color': Color(0xFF8E44AD), // Royal Purple
     },
     {
       'title': 'Data Mahasiswa',
+      'icon': Icons.school_outlined,
       'view': MahasiswaView(),
       'add': () => MahasiswaAddView(),
+      'color': Color(0xFF2980B9), // Deep Blue
     },
     {
       'title': 'Data Dosen',
+      'icon': Icons.person_outline,
       'view': DosenView(),
       'add': () => DosenAddView(),
+      'color': Color(0xFF27AE60), // Emerald Green
     },
     {
-      'title': 'Data Pegawai',
-      'view': PegawaiView(),
-      'add': () => PegawaiAddView(),
+      'title': 'Data Karyawan_22312019',
+      'icon': Icons.work_outline,
+      'view': karyawan_22312019View(),
+      'add': () => karyawan_22312019AddView(),
+      'color': Color(0xFF6A11CB), // Golden Orange
     },
   ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: drawer(),
+      backgroundColor: Colors.grey[100],
       appBar: AppBar(
-        backgroundColor: Colors.lightBlue,
-        titleSpacing: 0,
         title: Text(
           _fragment[_index]['title'],
-          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+          style: TextStyle(
+              fontWeight: FontWeight.w900,
+              color: Colors.white,
+              letterSpacing: 1.2),
         ),
+        flexibleSpace: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: [
+                _fragment[_index]['color'],
+                _fragment[_index]['color'].withOpacity(0.7)
+              ],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            ),
+          ),
+        ),
+        elevation: 10,
+        shadowColor: Colors.black45,
         actions: [
-          IconButton(
-            onPressed: () => Get.to(_fragment[_index]['add']),
-            icon: Icon(Icons.add_circle_outline, color: Colors.white),
+          Container(
+            margin: EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+            decoration: BoxDecoration(
+              color: Colors.white.withOpacity(0.2),
+              borderRadius: BorderRadius.circular(30),
+            ),
           )
         ],
       ),
+      drawer: _buildDrawer(),
       body: _fragment[_index]['view'],
     );
   }
 
-  Widget drawer() {
+  Widget _buildDrawer() {
     return Drawer(
-      child: ListView(
-        children: [
-          DrawerHeader(
-            decoration: BoxDecoration(
-              color: Colors.lightBlue,
-            ),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.end,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  decoration: BoxDecoration(
+      child: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [
+              Color(0xFF6A11CB), // Deep Purple
+              Color(0xFF2575FC) // Blue
+            ],
+          ),
+        ),
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: [
+            UserAccountsDrawerHeader(
+              decoration: BoxDecoration(color: Colors.transparent),
+              accountName: Text("Raziz Ahmad Arohmani",
+                  style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.w900,
+                      letterSpacing: 1.1)),
+              accountEmail: Text('Administrator',
+                  style: TextStyle(
+                      fontSize: 15,
+                      color: Colors.white70,
+                      fontWeight: FontWeight.w300)),
+              currentAccountPicture: Container(
+                decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    border: Border.all(color: Colors.white, width: 2),
-                  ),
-                  child: CircleAvatar(
-                    radius: 40,
-                    backgroundColor: Colors.white,
-                    child: Icon(
-                      Icons.person,
-                      size: 50,
-                      color: Colors.lightBlue,
-                    ),
-                  ),
+                    border: Border.all(color: Colors.white, width: 3),
+                    boxShadow: [
+                      BoxShadow(
+                          color: Colors.black26,
+                          blurRadius: 10,
+                          offset: Offset(0, 5))
+                    ]),
+                child: CircleAvatar(
+                  backgroundColor: Colors.white,
+                  child: Icon(Icons.person, color: Color(0xFF6A11CB), size: 50),
                 ),
-                SizedBox(height: 10),
-                Text(
-                  "Raziz Ahmad Arohmani",
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                  ),
-                ),
-                Text(
-                  'Admin',
-                  style: TextStyle(
-                    fontSize: 12,
-                    color: Colors.white70,
-                  ),
-                ),
-              ],
+              ),
             ),
-          ),
-          _buildDrawerItem(
-            index: 0,
-            icon: Icons.dashboard,
-            title: 'Dashboard',
-            color: Colors.lightBlue,
-          ),
-          _buildDrawerItem(
-            index: 1,
-            icon: Icons.people,
-            title: 'Data Mahasiswa',
-            color: Colors.green,
-          ),
-          _buildDrawerItem(
-            index: 2,
-            icon: Icons.person_pin,
-            title: 'Data Dosen',
-            color: Colors.purple,
-          ),
-          _buildDrawerItem(
-            index: 3,
-            icon: Icons.work,
-            title: 'Data Pegawai',
-            color: Colors.orange,
-          ),
-          _buildDrawerItem(
-            index: -1,
-            icon: Icons.logout,
-            title: 'Logout',
-            color: Colors.red,
-            onTap: () {
-              Get.back();
-              cAuth.logout();
-            },
-          ),
-        ],
+            ...List.generate(_fragment.length + 1, (index) {
+              if (index < _fragment.length) {
+                return _buildDrawerItem(
+                    icon: _fragment[index]['icon'],
+                    title: _fragment[index]['title'],
+                    color: _fragment[index]['color'],
+                    onTap: () {
+                      setState(() => _index = index);
+                      Get.back();
+                    });
+              } else {
+                return _buildDrawerItem(
+                    icon: Icons.logout,
+                    title: 'Logout',
+                    color: Colors.redAccent,
+                    onTap: () {
+                      Get.back();
+                      cAuth.logout();
+                    });
+              }
+            }),
+          ],
+        ),
       ),
     );
   }
 
-  Widget _buildDrawerItem({
-    required int index,
-    required IconData icon,
-    required String title,
-    required Color color,
-    VoidCallback? onTap,
-  }) {
+  Widget _buildDrawerItem(
+      {required IconData icon,
+      required String title,
+      required Color color,
+      required VoidCallback onTap}) {
     return ListTile(
-      onTap: onTap ??
-          () {
-            setState(() => _index = index);
-            Get.back();
-          },
-      leading: Icon(
-        icon,
-        color: color,
-      ),
-      title: Text(
-        title,
-        style: TextStyle(color: color),
-      ),
-      trailing: Icon(
-        Icons.navigate_next,
-        color: color,
-      ),
+      leading: Icon(icon, color: Colors.white),
+      title: Text(title,
+          style: TextStyle(color: Colors.white, fontWeight: FontWeight.w600)),
+      onTap: onTap,
+      trailing: Icon(Icons.chevron_right, color: Colors.white),
+      hoverColor: color.withOpacity(0.2),
     );
   }
 }

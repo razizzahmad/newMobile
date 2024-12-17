@@ -19,7 +19,8 @@ class MahasiswaController extends GetxController {
     CollectionReference mahasiswa = firestore.collection('mahasiswa');
     return mahasiswa.snapshots();
   }
-void add(String npm, String nama) async {
+
+  void add(String npm, String nama) async {
     CollectionReference mahasiswa = firestore.collection("mahasiswa");
 
     try {
@@ -39,7 +40,7 @@ void add(String npm, String nama) async {
             "OK";
           });
     } catch (e) {
-    print(e);
+      print(e);
       Get.defaultDialog(
         title: "Terjadi Kesalahan",
         middleText: "Gagal Menambahkan Mahasiswa.",
@@ -81,6 +82,7 @@ void add(String npm, String nama) async {
       );
     }
   }
+
   void delete(String id) {
     DocumentReference docRef = firestore.collection("mahasiswa").doc(id);
 
